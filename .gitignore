@@ -1,0 +1,30 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Firebase service account (VERY IMPORTANT - NEVER PUSH)
+serviceAccountKey.json
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output (if any)
+dist/
+build/
+
+# Vercel / deployment files
+.vercel
+
+# IDE files
+.vscode/
+.idea/
