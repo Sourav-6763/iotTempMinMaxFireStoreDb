@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import admin from "firebase-admin";
-import dotenv from "dotenv";
+import express from 'express';
+import cors from 'cors';
+import admin from 'firebase-admin';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 // 🔥 Fix private key newline issue
-serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, "\n");
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -30,7 +30,8 @@ app.post('/save-daily-min-max', async (req, res) => {
   const month = `${year}-${date.split('-')[1]}`;
 
   try {
-    await db.collection('Temperature History')
+    await db
+      .collection('Temperature History')
       .doc(year)
       .collection('records')
       .doc(date)
@@ -40,7 +41,7 @@ app.post('/save-daily-min-max', async (req, res) => {
         max,
         year,
         month,
-        createdAt: new Date()
+        createdAt: new Date(),
       });
 
     res.json({ success: true });
@@ -49,8 +50,12 @@ app.post('/save-daily-min-max', async (req, res) => {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send("Server running 🚀");
+app.get('/health/iottempMinMaxFirestoreDb', (req, res) => {
+  res.status(200).json({ status: 'ok', uptime: process.uptime() });
+});
+
+app.get('/', (req, res) => {
+  res.send('Server running 🚀');
 });
 
 const PORT = process.env.PORT || 5000;
